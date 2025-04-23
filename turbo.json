@@ -3,6 +3,7 @@
   "globalDependencies": [
     "**/.env.*local"
   ],
+  "globalEnv": ["ANDROID_HOME"],
   "tasks": {
     "build": {
       "dependsOn": [
