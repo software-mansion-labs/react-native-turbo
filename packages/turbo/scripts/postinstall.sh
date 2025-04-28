@@ -10,7 +10,7 @@ MONOREPO_SUFFIX="examples/turbo-demo-expo-example/node_modules/react-native-turb
 SKIP_RSYNC=0
 PARENT_FOLDER=$(realpath .. | awk -F/ '{print $NF}')
 
-# skip postinstall for `yarn install` called from inside `turbo-demo-expo-example`
+# Skip postinstall for `yarn install` called from inside `turbo-demo-expo-example`
 if [[ "$CURRENT_DIR" == *"$MONOREPO_SUFFIX" ]]; then
   SKIP_RSYNC=1
 elif [ "$PARENT_FOLDER" == "node_modules" ]; then
