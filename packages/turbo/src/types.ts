@@ -1,3 +1,5 @@
+import { EmitterSubscription } from "react-native";
+
 export type Action = 'advance' | 'replace' | 'restore';
 
 export interface VisitProposal {
@@ -76,7 +78,7 @@ export type StradaComponentProps = {
   sessionHandle: string;
   url: string;
   name: string;
-  registerMessageListener: (listener: SessionMessageCallback) => void;
+  registerMessageListener: (listener: SessionMessageCallback) => EmitterSubscription;
   sendToBridge: (message: StradaMessage) => void;
 };
 

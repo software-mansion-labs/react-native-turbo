@@ -5,14 +5,12 @@ import type {
   StradaMessage,
   StradaMessages,
   StradaComponentProps,
+  SessionMessageCallback,
 } from './types';
 
 const stradaMessageListener = (component: BridgeComponent) => (e: object) => {
   const message = e as StradaMessage;
-  if (
-    message?.component !== component.name ||
-    message?.data?.metadata?.url !== component.url
-  ) {
+  if (message?.component !== component.name) {
     return;
   }
   component.previousMessages[message.event] = message;
@@ -25,7 +23,9 @@ class BridgeComponent extends Component<StradaComponentProps> {
   sessionHandle: string;
   messageEventListenerSubscription?: EmitterSubscription;
   previousMessages: StradaMessages = {};
-  registerMessageListener: (listener: (e: object) => void) => void;
+  registerMessageListener: (
+    listener: SessionMessageCallback
+  ) => EmitterSubscription;
   sendToBridge: (message: StradaMessage) => void;
 
   constructor(props: StradaComponentProps) {
@@ -42,7 +42,9 @@ class BridgeComponent extends Component<StradaComponentProps> {
   }
 
   componentDidMount() {
-    this.registerMessageListener(stradaMessageListener(this));
+    this.messageEventListenerSubscription = this.registerMessageListener(
+      stradaMessageListener(this)
+    );
   }
 
   componentWillUnmount() {
