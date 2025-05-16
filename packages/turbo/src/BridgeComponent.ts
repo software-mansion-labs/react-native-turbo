@@ -1,11 +1,11 @@
 import { Component } from 'react';
-import type { EmitterSubscription } from 'react-native';
 
 import type {
   StradaMessage,
   StradaMessages,
   StradaComponentProps,
   SessionMessageCallback,
+  EventSubscription,
 } from './types';
 
 const stradaMessageListener = (component: BridgeComponent) => (e: object) => {
@@ -21,11 +21,11 @@ class BridgeComponent extends Component<StradaComponentProps> {
   name: string;
   url: string;
   sessionHandle: string;
-  messageEventListenerSubscription?: EmitterSubscription;
+  messageEventListenerSubscription?: EventSubscription;
   previousMessages: StradaMessages = {};
   registerMessageListener: (
     listener: SessionMessageCallback
-  ) => EmitterSubscription;
+  ) => EventSubscription;
   sendToBridge: (message: StradaMessage) => void;
 
   constructor(props: StradaComponentProps) {
