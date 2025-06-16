@@ -8952,13 +8952,8 @@ react-native-screens@~4.4.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
-react-native-turbo@*:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/react-native-turbo/-/react-native-turbo-0.2.4.tgz#92eeae1a8019deaed8557d77a2f25e67d29ccb5e"
-  integrity sha512-l7WcDaVTQD6S611MmFwvdgQawAACs43SVDKUs92pqBCQw3j7xXfW4bc5OoiIG6c/5qSsb3DNQj5XC6MnlkLPqQ==
-
 "react-native-turbo@file:packages/turbo":
-  version "1.1.0"
+  version "1.2.0"
 
 "react-native-web-screen@file:packages/navigation":
   version "1.1.0"
