@@ -99,7 +99,27 @@ class RNVisitableView: UIView, RNSessionSubscriber {
                                                     bottom: contentInset["bottom"] ?? 0,
                                                     right: contentInset["right"] ?? 0)
   }
+
+  private var webViewUrlObservation: NSKeyValueObservation?
+
+  private func startObservingWebViewUrl() {
+    stopObservingWebViewUrl()
+    webViewUrlObservation = webView?.observe(\.url, options: [.new]) { [weak self] webView, change in
+            guard let self = self,
+                  let newUrl = change.newValue ?? nil,
+                  let controller = self.controller else { return }
+            
+            if controller.visitableURL != newUrl {
+                controller.visitableURL = newUrl
+            }
+        }   
+    }
     
+    private func stopObservingWebViewUrl() {
+        webViewUrlObservation?.invalidate()
+        webViewUrlObservation = nil
+    }
+
   override func willMove(toWindow newWindow: UIWindow?) {
     super.willMove(toWindow: newWindow)
     
@@ -115,6 +135,7 @@ class RNVisitableView: UIView, RNSessionSubscriber {
     super.didMoveToWindow()
     
     if (window == nil) {
+      stopObservingWebViewUrl()
       return
     }
     
@@ -141,6 +162,7 @@ class RNVisitableView: UIView, RNSessionSubscriber {
 
   override func removeFromSuperview() {
     super.removeFromSuperview()
+    stopObservingWebViewUrl()
     _session = nil
     controller = nil
   }
@@ -270,6 +292,7 @@ extension RNVisitableView: RNVisitableViewControllerDelegate {
 
   func visitableDidAppear(visitable: Visitable) {
     configureWebView()
+    startObservingWebViewUrl()
     session?.visitableViewDidAppear(view: self)
   }
     
@@ -281,7 +304,7 @@ extension RNVisitableView: RNVisitableViewControllerDelegate {
   }
 
   func visitableDidDisappear(visitable: Visitable) {
-    // No-op
+    stopObservingWebViewUrl()
   }
 
   func visitableDidRender(visitable: Visitable) {
