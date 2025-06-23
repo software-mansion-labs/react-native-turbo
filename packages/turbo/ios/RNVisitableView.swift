@@ -21,6 +21,11 @@ class RNVisitableView: UIView, RNSessionSubscriber {
       webViewConfiguration.applicationNameForUserAgent = applicationNameForUserAgent as? String
     }
   }
+  @objc var allowsInlineMediaPlayback: Bool = false {
+    didSet {
+      webViewConfiguration.allowsInlineMediaPlayback = allowsInlineMediaPlayback
+    }
+  }
   @objc var pullToRefreshEnabled: Bool = true {
     didSet {
       controller!.visitableView.allowsPullToRefresh = pullToRefreshEnabled
