@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WebKit
 
 public protocol RNVisitableViewControllerDelegate {
   
@@ -29,14 +30,28 @@ class RNVisitableViewController: UIViewController, Visitable {
   public var delegate: RNVisitableViewControllerDelegate?
 
   open weak var visitableDelegate: VisitableDelegate?
-  open var visitableURL: URL!
+  public var initialVisitableURL: URL
+  public var currentVisitableURL: URL {
+    resolveVisitableLocation()
+  }
 
   private var reactViewController: UIViewController? = nil
-    
-  public convenience init(reactViewController: UIViewController?, delegate: RNVisitableViewControllerDelegate?) {
-    self.init()
+
+  public init(reactViewController: UIViewController?, delegate: RNVisitableViewControllerDelegate?) {
+    self.initialVisitableURL = URL(string: "about:blank")!
+    self.visitableLocationState = .initialized(self.initialVisitableURL)
     self.reactViewController = reactViewController
     self.delegate = delegate
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required public init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  public func initializeVisit(url: URL) {
+    initialVisitableURL = url
+    visitableLocationState = .initialized(url)
   }
 
   // MARK: View Lifecycle
@@ -71,6 +86,7 @@ class RNVisitableViewController: UIViewController, Visitable {
 
   func visitableDidRender() {
     delegate?.visitableDidRender(visitable: self)
+    visitableLocationState = .resolved
   }
     
   func showVisitableActivityIndicator() {
@@ -81,9 +97,21 @@ class RNVisitableViewController: UIViewController, Visitable {
     delegate?.hideVisitableActivityIndicator()
   }
     
+  func visitableDidActivateWebView(_ webView: WKWebView) {
+    // No-op
+  }
+  
+  func visitableWillDeactivateWebView() {
+    visitableLocationState = .deactivated(visitableView.webView?.url ?? initialVisitableURL)
+  }
+    
+  open func visitableDidDeactivateWebView() {
+    // No-op
+  }
+    
   // MARK: Visitable View
 
-  open private(set) lazy var visitableView: VisitableView! = {
+  open private(set) lazy var visitableView: VisitableView = {
     let view = VisitableView(frame: CGRect.zero)
     view.translatesAutoresizingMaskIntoConstraints = false
       
@@ -103,5 +131,23 @@ class RNVisitableViewController: UIViewController, Visitable {
   public var visitableViewController: UIViewController {
     self.reactViewController?.parent ?? self
   }
-  
+
+  enum VisitableLocationState {
+      case resolved
+      case initialized(URL)
+      case deactivated(URL)
+  }
+
+  private var visitableLocationState: VisitableLocationState
+
+  private func resolveVisitableLocation() -> URL {
+      switch visitableLocationState {
+      case .resolved:
+          return visitableView.webView?.url ?? initialVisitableURL
+      case .initialized(let url):
+          return url
+      case .deactivated(let url):
+          return url
+      }
+  }
 }
