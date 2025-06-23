@@ -1,18 +1,16 @@
 import { Component } from 'react';
-import type { EmitterSubscription } from 'react-native';
 
 import type {
   StradaMessage,
   StradaMessages,
   StradaComponentProps,
+  SessionMessageCallback,
+  EventSubscription,
 } from './types';
 
 const stradaMessageListener = (component: BridgeComponent) => (e: object) => {
   const message = e as StradaMessage;
-  if (
-    message?.component !== component.name ||
-    message?.data?.metadata?.url !== component.url
-  ) {
+  if (message?.component !== component.name) {
     return;
   }
   component.previousMessages[message.event] = message;
@@ -23,9 +21,11 @@ class BridgeComponent extends Component<StradaComponentProps> {
   name: string;
   url: string;
   sessionHandle: string;
-  messageEventListenerSubscription?: EmitterSubscription;
+  messageEventListenerSubscription?: EventSubscription;
   previousMessages: StradaMessages = {};
-  registerMessageListener: (listener: (e: object) => void) => void;
+  registerMessageListener: (
+    listener: SessionMessageCallback
+  ) => EventSubscription;
   sendToBridge: (message: StradaMessage) => void;
 
   constructor(props: StradaComponentProps) {
@@ -42,7 +42,9 @@ class BridgeComponent extends Component<StradaComponentProps> {
   }
 
   componentDidMount() {
-    this.registerMessageListener(stradaMessageListener(this));
+    this.messageEventListenerSubscription = this.registerMessageListener(
+      stradaMessageListener(this)
+    );
   }
 
   componentWillUnmount() {

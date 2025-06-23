@@ -72,11 +72,17 @@ export type SessionMessageCallback = (message: object) => void;
 
 export type OnErrorCallback = (error: ErrorEvent) => void;
 
+export type EventSubscription = {
+  remove: () => void;
+};
+
 export type StradaComponentProps = {
   sessionHandle: string;
   url: string;
   name: string;
-  registerMessageListener: (listener: SessionMessageCallback) => void;
+  registerMessageListener: (
+    listener: SessionMessageCallback
+  ) => EventSubscription;
   sendToBridge: (message: StradaMessage) => void;
 };
 

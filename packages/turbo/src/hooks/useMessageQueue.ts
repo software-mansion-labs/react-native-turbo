@@ -15,6 +15,14 @@ export function useMessageQueue(
   const registerMessageListener = useCallback(
     (listener: SessionMessageCallback) => {
       onMessageCallbacks.current.push(listener);
+
+      return {
+        remove: () => {
+          onMessageCallbacks.current = onMessageCallbacks.current.filter(
+            (callback) => callback !== listener
+          );
+        },
+      };
     },
     []
   );
