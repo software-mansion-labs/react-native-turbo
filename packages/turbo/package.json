@@ -1,6 +1,6 @@
 {
   "name": "react-native-turbo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Support for @hotwired/turbo in React Native apps",
   "homepage": "https://github.com/software-mansion-labs/react-native-turbo-demo/tree/main/packages/turbo",
   "repository": {
