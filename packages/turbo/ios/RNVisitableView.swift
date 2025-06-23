@@ -104,6 +104,11 @@ class RNVisitableView: UIView, RNSessionSubscriber {
 
   private func startObservingWebViewUrl() {
     stopObservingWebViewUrl()
+
+    // This helps ensure pull-to-refresh refreshes the correct URL after Turbo Frame navigations.
+    // Currently, this does not trigger an `onLoad` on the JS side — iOS needs this workaround,
+    // while Android handles pull-to-refresh correctly without it.
+    // Consider triggering `onLoad` if a cross-platform solution is found.
     webViewUrlObservation = webView?.observe(\.url, options: [.new]) { [weak self] webView, change in
             guard let self = self,
                   let newUrl = change.newValue ?? nil,
