@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "outputs": [
+        "android/build",
+        "android/vendor",
+        "android/turbo-android-dependencies.gradle",
+        "ios/vendor",
+        "lib"
+      ]
+    }
+  }
+}

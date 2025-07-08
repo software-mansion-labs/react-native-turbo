@@ -1,22 +1,38 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
+  "globalEnv": ["ANDROID_HOME"],
+  "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": [
+        "^lint"
+      ]
     },
     "prepare": {
-      "dependsOn": ["^prepare"]
+      "dependsOn": [
+        "^prepare"
+      ]
     },
     "postinstall": {
-      "dependsOn": ["^postinstall"]
+      "dependsOn": [
+        "^postinstall"
+      ]
     },
     "typescript": {
-      "dependsOn": ["^typescript"]
+      "dependsOn": [
+        "^typescript"
+      ]
     },
     "clean": {
       "cache": false,
@@ -27,10 +43,14 @@
       "persistent": true
     },
     "dev:ios": {
-      "dependsOn": ["^dev"]
+      "dependsOn": [
+        "^dev"
+      ]
     },
     "dev:android": {
-      "dependsOn": ["^dev"]
+      "dependsOn": [
+        "^dev"
+      ]
     }
   }
 }

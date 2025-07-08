@@ -23,8 +23,8 @@ cd hotwire-native-ios
 git apply $PATCH_FILE
 
 # Keep the Source folder and remove the rest
-for file in *; do
-  if [ "$file" != "Source" ]; then
+for file in * .*; do
+  if [ "$file" != "Source" ] && [ "$file" != "." ] && [ "$file" != ".." ]; then
     rm -rf $file
   fi
 done
