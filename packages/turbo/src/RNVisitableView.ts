@@ -34,6 +34,7 @@ export interface RNVisitableViewProps {
   progressViewOffset?: ProgressViewOffsetObject;
   refreshControlTopAnchor: number;
   webViewDebuggingEnabled: boolean;
+  allowsInlineMediaPlayback: boolean;
   onLoad?: (e: NativeSyntheticEvent<LoadEvent>) => void;
   onMessage?: (e: NativeSyntheticEvent<MessageEvent>) => void;
   onError?: (e: NativeSyntheticEvent<ErrorEvent>) => void;

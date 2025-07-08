@@ -113,6 +113,12 @@ Note: available only on Android.
 
 Enables debugging in the webview. Default value is `false`.
 
+### `allowsInlineMediaPlayback`
+
+Controls whether HTML5 videos and audio can play inline automatically without user interaction. Default value is `false`.
+
+Note: available only on iOS.
+
 ### `stradaComponents`
 
 `VisitableView` supports defining [Strada components](https://strada.hotwired.dev/) that receive and reply to messages from web components that are present on the page within one session. This prop accepts an array of Strada components that will be registered in the webview.

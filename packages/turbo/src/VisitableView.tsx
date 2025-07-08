@@ -56,6 +56,7 @@ export interface Props {
   progressViewOffset?: ProgressViewOffsetObject;
   refreshControlTopAnchor?: number;
   webViewDebuggingEnabled?: boolean;
+  allowsInlineMediaPlayback?: boolean;
   renderLoading?: RenderLoading;
   renderError?: RenderError;
   onVisitProposal: (proposal: VisitProposal) => void;
@@ -90,6 +91,7 @@ const VisitableView = React.forwardRef<RefObject, React.PropsWithRef<Props>>(
       progressViewOffset,
       refreshControlTopAnchor = 0,
       webViewDebuggingEnabled = false,
+      allowsInlineMediaPlayback = false,
       renderLoading,
       renderError,
       onLoad,
@@ -231,6 +233,7 @@ const VisitableView = React.forwardRef<RefObject, React.PropsWithRef<Props>>(
           progressViewOffset={progressViewOffset}
           refreshControlTopAnchor={refreshControlTopAnchor}
           webViewDebuggingEnabled={webViewDebuggingEnabled}
+          allowsInlineMediaPlayback={allowsInlineMediaPlayback}
           onError={onErrorCombinedHandlers}
           onVisitProposal={handleVisitProposal}
           onMessage={handleOnMessage}

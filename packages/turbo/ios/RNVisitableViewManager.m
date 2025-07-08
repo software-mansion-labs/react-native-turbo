@@ -21,6 +21,7 @@
   RCT_EXPORT_VIEW_PROPERTY(contentInset, NSDictionary)
   RCT_EXPORT_VIEW_PROPERTY(refreshControlTopAnchor, NSNumber)
   RCT_EXPORT_VIEW_PROPERTY(webViewDebuggingEnabled, BOOL)
+  RCT_EXPORT_VIEW_PROPERTY(allowsInlineMediaPlayback, BOOL)
   RCT_EXPORT_VIEW_PROPERTY(onVisitProposal, RCTDirectEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onOpenExternalUrl, RCTDirectEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
