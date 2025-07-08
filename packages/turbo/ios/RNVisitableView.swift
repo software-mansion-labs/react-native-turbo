@@ -202,10 +202,10 @@ class RNVisitableView: UIView, RNSessionSubscriber {
   }
 
   private func visit() {
-    if (controller?.visitableURL?.absoluteString == url as String) {
+    if (controller?.currentVisitableURL.absoluteString == url as String) {
       return
     }
-    controller!.visitableURL = URL(string: String(url))
+    controller!.initializeVisit(url: URL(string: String(url))!)
     session?.visit(controller!)
   }
 
@@ -245,7 +245,7 @@ class RNVisitableView: UIView, RNSessionSubscriber {
 
   public func didFailRequestForVisitable(visitable: Visitable, error: Error){
     let event: [AnyHashable: Any] = [
-      "url": visitable.visitableURL.absoluteString,
+      "url": visitable.currentVisitableURL.absoluteString,
       "description": error.localizedDescription,
       "statusCode": getStatusCodeFromError(error: error as? TurboError)
     ]

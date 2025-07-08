@@ -22,7 +22,7 @@
   "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index.tsx",
   "hotwireNative": {
-    "ios": "1.1.3",
+    "ios": "1.2.0",
     "android": "1.1.1"
   },
   "scripts": {

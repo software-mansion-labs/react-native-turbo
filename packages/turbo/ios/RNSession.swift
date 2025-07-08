@@ -116,6 +116,15 @@ extension RNSession: SessionDelegate {
   func sessionDidFinishFormSubmission(_ session: Session) {
     visitableView?.didFinishFormSubmission()
   }
+
+  func session(_ session: Session, decidePolicyFor navigationAction: WKNavigationAction) -> WebViewPolicyManager.Decision {
+    guard let url = navigationAction.request.url else {
+      return .allow
+    }
+    // regardless of the return value here nothing happens, so we have to manually open external URL
+    visitableView?.didOpenExternalUrl(url: url)
+    return .allow
+  }
 }
 
 extension RNSession: WKScriptMessageHandler {
